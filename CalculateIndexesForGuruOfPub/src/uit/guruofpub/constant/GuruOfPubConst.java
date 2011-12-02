@@ -19,9 +19,9 @@ public class GuruOfPubConst {
         
         public static final int MAX_RETRY_TIMES = 1;
         public static final int TIME_SLEEP_AFTER_EXCEPTION = 60000;
-        public static final int TIME_SLEEP = 1000;
+        public static final int TIME_SLEEP = 750;
         //public static final Level LOGGING_LEVEL = Level.ALL;
         public static final Level LOGGING_LEVEL = Level.WARNING;
         
-        public static final int ITEM_LIST_SIZE = 1000; //MAS supports max size 1000
+        public static final int ITEM_LIST_SIZE = 100; //MAS supports max size 100
 }
