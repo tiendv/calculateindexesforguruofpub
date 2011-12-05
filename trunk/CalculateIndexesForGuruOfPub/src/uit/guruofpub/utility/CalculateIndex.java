@@ -72,12 +72,13 @@ public class CalculateIndex {
                 if (g_index < publicationList.size()) {
                     citationCountSum += ((PaperDTO)publicationList.get(g_index)).getCitationCount();
                 }
-                if (citationCountSum >= (g_index + 1) * (g_index + 1)) 
+                if (citationCountSum >= ((g_index + 1) * (g_index + 1)))
                     g_index++;
                 else break;
             }
             // Save indexes to DB.
-            authorMapper.saveIndexes(idAuthor, h_index, g_index);
+            if ((h_index != 0) || (g_index != 0))
+                authorMapper.saveIndexes(idAuthor, h_index, g_index);
         }
     }
     
@@ -156,12 +157,13 @@ public class CalculateIndex {
                 if (g_index < publicationList.size()) {
                     citationCountSum += ((PaperDTO)publicationList.get(g_index)).getCitationCount();
                 }
-                if (citationCountSum >= (g_index + 1) * (g_index + 1)) 
+                if (citationCountSum >= ((g_index + 1) * (g_index + 1)))
                     g_index++;
                 else break;
             }
             // Save indexes to DB.
-            orgMapper.saveIndexes(idOrg, h_index, g_index);
+            if ((h_index != 0) || (g_index != 0))
+                orgMapper.saveIndexes(idOrg, h_index, g_index);
         }
     }
 }
