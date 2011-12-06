@@ -313,7 +313,7 @@ public class OrgMapper extends MapperDB {
         
         try {
             StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT author.* FROM guruofpub.Author author");
+            sql.append(" SELECT distinct author.* FROM guruofpub.Author author");
             sql.append(" where author.idOrg = ?");
             PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
             stmt.setInt(1, idOrg);
@@ -353,7 +353,7 @@ public class OrgMapper extends MapperDB {
         
         try {
             StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT p.* FROM guruofpub.author a");
+            sql.append(" SELECT distinct p.* FROM guruofpub.author a");
             sql.append(" join guruofpub.author_paper ap on a.idAuthor = ap.idAuthor");
             sql.append(" join guruofpub.paper p on ap.idPaper = p.idPaper");
             sql.append(" where a.idOrg = ?");
@@ -394,7 +394,7 @@ public class OrgMapper extends MapperDB {
             throw ex;
         }
 
-        return paperDTOList;        
+        return paperDTOList;
     }
 
     public int saveIndexes(int idOrg, int h_index, int g_index) throws Exception {
@@ -485,5 +485,263 @@ public class OrgMapper extends MapperDB {
         }
 
         return g_index;
+    }
+
+    public ArrayList getAuthorDTOListByOrgIdSubdomainId(int idOrg, int idSubdomain) throws Exception {
+        ArrayList authorDTOList = new ArrayList();
+        AuthorDTO dtoAuthor = new AuthorDTO();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct a.* FROM guruofpub.Author a");
+            sql.append(" JOIN guruofpub.author_paper ap ON a.idAuthor = ap.idAuthor");
+            sql.append(" JOIN guruofpub.paper p ON ap.idPaper = p.idPaper");
+            sql.append(" JOIN guruofpub.subdomain_paper sp ON p.idPaper = sp.idPaper");
+            sql.append(" where a.idOrg = ?");
+            sql.append(" and sp.idSubdomain = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idOrg);
+            stmt.setInt(2, idSubdomain);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                dtoAuthor = new AuthorDTO();
+                dtoAuthor.setIdAuthor(rs.getInt("idAuthor"));
+                dtoAuthor.setAuthorName(rs.getString("authorName"));
+                dtoAuthor.setEmailAddress(rs.getString("emailAddress"));
+                dtoAuthor.setG_index(rs.getInt("g_index"));
+                dtoAuthor.setH_index(rs.getInt("h_index"));
+                dtoAuthor.setIdOrg(rs.getInt("idOrg"));
+                dtoAuthor.setImage(rs.getString("image"));
+                dtoAuthor.setUrl(rs.getString("url"));
+                dtoAuthor.setWebsite(rs.getString("website"));
+                authorDTOList.add(dtoAuthor);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return authorDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByOrgIdSubdomainId(int idOrg, int idSubdomain) throws Exception {
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.author a");
+            sql.append(" join guruofpub.author_paper ap on a.idAuthor = ap.idAuthor");
+            sql.append(" join guruofpub.paper p on ap.idPaper = p.idPaper");
+            sql.append(" join guruofpub.subdomain_paper sp on p.idPaper = sp.idPaper");
+            sql.append(" where a.idOrg = ?");
+            sql.append(" and sp.idSubdomain = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idOrg);
+            stmt.setInt(2, idSubdomain);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public int saveIndexesOrgSubdomain(int idOrg, int idSubdomain, int h_index, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_org_subdomain(idOrg, idSubdomain, h_index, g_index)");
+            sql.append(" value (?, ?, ?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" h_index = ?, g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idOrg);
+            stmt.setInt(2, idSubdomain);
+            stmt.setInt(3, h_index);
+            stmt.setInt(4, g_index);
+            stmt.setInt(5, h_index);
+            stmt.setInt(6, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
+    }
+
+    public ArrayList getAuthorDTOListByOrgIdKeywordId(int idOrg, int idKeyword) throws Exception {
+        ArrayList authorDTOList = new ArrayList();
+        AuthorDTO dtoAuthor = new AuthorDTO();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct a.* FROM guruofpub.Author a");
+            sql.append(" JOIN guruofpub.author_paper ap ON a.idAuthor = ap.idAuthor");
+            sql.append(" JOIN guruofpub.paper p ON ap.idPaper = p.idPaper");
+            sql.append(" JOIN guruofpub.paper_keyword pk ON p.idPaper = pk.idPaper");
+            sql.append(" where a.idOrg = ?");
+            sql.append(" and pk.idKeyword = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idOrg);
+            stmt.setInt(2, idKeyword);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                dtoAuthor = new AuthorDTO();
+                dtoAuthor.setIdAuthor(rs.getInt("idAuthor"));
+                dtoAuthor.setAuthorName(rs.getString("authorName"));
+                dtoAuthor.setEmailAddress(rs.getString("emailAddress"));
+                dtoAuthor.setG_index(rs.getInt("g_index"));
+                dtoAuthor.setH_index(rs.getInt("h_index"));
+                dtoAuthor.setIdOrg(rs.getInt("idOrg"));
+                dtoAuthor.setImage(rs.getString("image"));
+                dtoAuthor.setUrl(rs.getString("url"));
+                dtoAuthor.setWebsite(rs.getString("website"));
+                authorDTOList.add(dtoAuthor);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return authorDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByOrgIdKeywordId(int idOrg, int idKeyword) throws Exception {
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.author a");
+            sql.append(" join guruofpub.author_paper ap on a.idAuthor = ap.idAuthor");
+            sql.append(" join guruofpub.paper p on ap.idPaper = p.idPaper");
+            sql.append(" join guruofpub.paper_keyword pk on p.idPaper = pk.idPaper");
+            sql.append(" where a.idOrg = ?");
+            sql.append(" and pk.idKeyword = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idOrg);
+            stmt.setInt(2, idKeyword);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public int saveIndexesOrgKeyword(int idOrg, int idKeyword, int h_index, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_org_keyword(idOrg, idKeyword, h_index, g_index)");
+            sql.append(" value (?, ?, ?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" h_index = ?, g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idOrg);
+            stmt.setInt(2, idKeyword);
+            stmt.setInt(3, h_index);
+            stmt.setInt(4, g_index);
+            stmt.setInt(5, h_index);
+            stmt.setInt(6, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
     }
 }

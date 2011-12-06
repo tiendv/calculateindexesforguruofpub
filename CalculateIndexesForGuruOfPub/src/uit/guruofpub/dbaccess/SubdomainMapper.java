@@ -253,5 +253,32 @@ public class SubdomainMapper extends MapperDB {
         }
 
         return subdomainDTOList;        
-    }    
+    }
+
+    public ArrayList getSubdomainIdList() throws Exception{
+        ArrayList subdomainIdList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT s.idSubdomain FROM guruofpub.Subdomain s ORDER BY s.idSubdomain");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                subdomainIdList.add(rs.getInt("idSubdomain"));
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return subdomainIdList;
+    }
 }

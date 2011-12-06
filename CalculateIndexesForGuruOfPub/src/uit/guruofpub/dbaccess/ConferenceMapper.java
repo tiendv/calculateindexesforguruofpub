@@ -377,4 +377,117 @@ public class ConferenceMapper extends MapperDB {
 
         return conferenceName;        
     }
+
+    public ArrayList getConferenceIdList() throws Exception{
+        ArrayList conferenceIdList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT c.idConference FROM guruofpub.conference c ORDER BY c.idConference");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                conferenceIdList.add(rs.getInt("idConference"));
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return conferenceIdList;
+    }
+
+    public int saveIndexes(int idConference, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_conference(idConference, g_index)");
+            sql.append(" value (?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idConference);
+            stmt.setInt(2, g_index);
+            stmt.setInt(3, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
+    }
+
+    public int saveIndexesConferenceSubdomain(int idConference, int idSubdomain, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_conference_subdomain(idConference, idSubdomain, g_index)");
+            sql.append(" value (?, ?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idConference);
+            stmt.setInt(2, idSubdomain);
+            stmt.setInt(3, g_index);
+            stmt.setInt(4, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
+    }
+
+    public int saveIndexesConferenceKeyword(int idConference, int idKeyword, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_conference_keyword(idConference, idKeyword, g_index)");
+            sql.append(" value (?, ?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idConference);
+            stmt.setInt(2, idKeyword);
+            stmt.setInt(3, g_index);
+            stmt.setInt(4, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
+    }
 }

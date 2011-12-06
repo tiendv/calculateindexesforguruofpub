@@ -375,7 +375,7 @@ public class PaperMapper extends MapperDB {
             throw ex;
         }
 
-        return paperDTOList;        
+        return paperDTOList;
     }
 
     /**
@@ -529,5 +529,305 @@ public class PaperMapper extends MapperDB {
         }
 
         return citationCount;
+    }
+
+    public ArrayList getPublicationDTOListByJournalId(int idJournal) throws Exception{
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.paper p");
+            sql.append(" where p.idJournal = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idJournal);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByConferenceId(int idConference) throws Exception{
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.paper p");
+            sql.append(" where p.idConference = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idConference);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByJournalIdSubdomainId(int idJournal, int idSubdomain) throws Exception{
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.paper p");
+            sql.append(" JOIN guruofpub.subdomain_paper sp ON p.idPaper = sp.idPaper");
+            sql.append(" where p.idJournal = ?");
+            sql.append(" and sp.idSubdomain = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idJournal);
+            stmt.setInt(2, idSubdomain);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByJournalIdKeywordId(int idJournal, int idKeyword) throws Exception{
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.paper p");
+            sql.append(" JOIN guruofpub.paper_keyword pk ON p.idPaper = pk.idPaper");
+            sql.append(" where p.idJournal = ?");
+            sql.append(" and pk.idKeyword = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idJournal);
+            stmt.setInt(2, idKeyword);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByConferenceIdSubdomainId(int idConference, int idSubdomain) throws Exception{
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.paper p");
+            sql.append(" JOIN guruofpub.subdomain_paper sp ON p.idPaper = sp.idPaper");
+            sql.append(" where p.idConference = ?");
+            sql.append(" and sp.idSubdomain = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idConference);
+            stmt.setInt(2, idSubdomain);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
+    }
+
+    public ArrayList getPublicationDTOListByConferenceIdKeywordId(int idConference, int idKeyword) throws Exception{
+        PaperDTO paperDTO = null;
+        ArrayList paperDTOList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT distinct p.* FROM guruofpub.paper p");
+            sql.append(" JOIN guruofpub.paper_keyword pk ON p.idPaper = pk.idPaper");
+            sql.append(" where p.idConference = ?");
+            sql.append(" and pk.idKeyword = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idConference);
+            stmt.setInt(2, idKeyword);
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                paperDTO = new PaperDTO();
+                paperDTO.setIdPaper(rs.getInt("idPaper"));
+                paperDTO.setDoi(rs.getString("doi"));
+                paperDTO.setIsbn(rs.getString("isbn"));
+                paperDTO.setUrl(rs.getString("url"));
+                paperDTO.setTitle(rs.getString("title"));
+                paperDTO.setAbstractContent(rs.getString("abstract"));
+                paperDTO.setVolume(rs.getString("volume"));
+                paperDTO.setPages(rs.getString("pages"));
+                paperDTO.setYear(rs.getInt("year"));
+                paperDTO.setViewPublication(rs.getString("viewPublication"));
+                paperDTO.setBibTex(rs.getString("bibTex"));
+                paperDTO.setEndNote(rs.getString("endNote"));
+                paperDTO.setIdJournal(rs.getInt("idJournal"));
+                paperDTO.setIdConference(rs.getInt("idConference"));
+                paperDTO.setIdMagazine(rs.getInt("idMagazine"));
+                paperDTO.setVersion(rs.getInt("version"));
+                paperDTO.setPaperFile(rs.getString("paperFile"));
+                paperDTOList.add(paperDTO);
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return paperDTOList;
     }
 }

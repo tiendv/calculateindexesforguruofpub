@@ -273,7 +273,7 @@ public class JournalMapper extends MapperDB {
             throw ex;
         }
 
-        return journalDTOList;        
+        return journalDTOList;
     }
 
     
@@ -304,5 +304,118 @@ public class JournalMapper extends MapperDB {
         }
 
         return journalName;
+    }
+
+    public ArrayList getJournalIdList() throws Exception{
+        ArrayList journalIdList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT j.idJournal FROM guruofpub.journal j ORDER BY j.idJournal");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                journalIdList.add(rs.getInt("idJournal"));
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return journalIdList;
+    }
+
+    public int saveIndexes(int idJournal, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_journal(idJournal, g_index)");
+            sql.append(" value (?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idJournal);
+            stmt.setInt(2, g_index);
+            stmt.setInt(3, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
+    }
+
+    public int saveIndexesJournalSubdomain(int idJournal, int idSubdomain, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_journal_subdomain(idJournal, idSubdomain, g_index)");
+            sql.append(" value (?, ?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idJournal);
+            stmt.setInt(2, idSubdomain);
+            stmt.setInt(3, g_index);
+            stmt.setInt(4, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
+    }
+
+    public int saveIndexesJournalKeyword(int idJournal, int idKeyword, int g_index) throws Exception {
+        int result = -1;
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" insert into guruofpub._rank_journal_keyword(idJournal, idKeyword, g_index)");
+            sql.append(" value (?, ?, ?)");
+            sql.append(" on duplicate key update");
+            sql.append(" g_index = ?");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            stmt.setInt(1, idJournal);
+            stmt.setInt(2, idKeyword);
+            stmt.setInt(3, g_index);
+            stmt.setInt(4, g_index);
+            result = stmt.executeUpdate();
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+        return result;
     }
 }

@@ -254,6 +254,33 @@ public class KeywordMapper extends MapperDB {
             throw ex;
         }
 
-        return keywordDTOList;        
-    }    
+        return keywordDTOList;
+    }
+
+    public ArrayList getKeywordIdList() throws Exception{
+        ArrayList keywordIdList = new ArrayList();
+        
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT k.idKeyword FROM guruofpub.Keyword k ORDER BY k.idKeyword");
+            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
+            ResultSet rs = stmt.executeQuery();
+            while ((rs != null) && (rs.next())) {
+                keywordIdList.add(rs.getInt("idKeyword"));
+            }
+
+            stmt.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null)
+                for (Object stackTraceElement : arrObj)
+                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
+            throw ex;
+        }
+
+        return keywordIdList;
+    }
 }
