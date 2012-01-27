@@ -41,22 +41,6 @@ public class CalculateIndexesForGuruOfPub {
             System.out.println("End calculation index for author.");
             GuruOfPubLogger.logger.warning("End calculation index for author.");
             
-            System.out.println("Begin calculation index for author in subdomain.");
-            GuruOfPubLogger.logger.warning("Begin calculation index for author in subdomain.");
-            System.out.println("Caculating...");
-            GuruOfPubLogger.logger.warning("Caculating...");
-            calculateIndex.calculateIndexAuthorSubdomain();
-            System.out.println("End calculation index for author in subdomain.");
-            GuruOfPubLogger.logger.warning("End calculation index for author in subdomain.");
-
-            System.out.println("Begin calculation index for author in keyword.");
-            GuruOfPubLogger.logger.warning("Begin calculation index for author in keyword.");
-            System.out.println("Caculating...");
-            GuruOfPubLogger.logger.warning("Caculating...");
-            calculateIndex.calculateIndexAuthorKeyword();
-            System.out.println("End calculation index for author in keyword.");
-            GuruOfPubLogger.logger.warning("End calculation index for author in keyword.");
-
             System.out.println("Begin calculation index for org.");
             GuruOfPubLogger.logger.warning("Begin calculation index for org.");
             System.out.println("Caculating...");
@@ -64,22 +48,6 @@ public class CalculateIndexesForGuruOfPub {
             calculateIndex.calculateIndexOrg();
             System.out.println("End calculation index for org.");
             GuruOfPubLogger.logger.warning("End calculation index for org.");
-
-            System.out.println("Begin calculation index for org in subdomain.");
-            GuruOfPubLogger.logger.warning("Begin calculation index for org in subdomain.");
-            System.out.println("Caculating...");
-            GuruOfPubLogger.logger.warning("Caculating...");
-            calculateIndex.calculateIndexOrgSubdomain();
-            System.out.println("End calculation index for org in subdomain.");
-            GuruOfPubLogger.logger.warning("End calculation index for org in subdomain.");
-
-            System.out.println("Begin calculation index for org in keyword.");
-            GuruOfPubLogger.logger.warning("Begin calculation index for org in keyword.");
-            System.out.println("Caculating...");
-            GuruOfPubLogger.logger.warning("Caculating...");
-            calculateIndex.calculateIndexOrgKeyword();
-            System.out.println("End calculation index for org in keyword.");
-            GuruOfPubLogger.logger.warning("End calculation index for org in keyword.");
 
             System.out.println("Begin calculation index for journal.");
             GuruOfPubLogger.logger.warning("Begin calculation index for journal.");
@@ -89,22 +57,6 @@ public class CalculateIndexesForGuruOfPub {
             System.out.println("End calculation index for journal.");
             GuruOfPubLogger.logger.warning("End calculation index for journal.");
 
-            System.out.println("Begin calculation index for journal in subdomain.");
-            GuruOfPubLogger.logger.warning("Begin calculation index for journal in subdomain.");
-            System.out.println("Caculating...");
-            GuruOfPubLogger.logger.warning("Caculating...");
-            calculateIndex.calculateIndexJournalSubdomain();
-            System.out.println("End calculation index for journal in subdomain.");
-            GuruOfPubLogger.logger.warning("End calculation index for journal in subdomain.");
-
-            System.out.println("Begin calculation index for journal in keyword.");
-            GuruOfPubLogger.logger.warning("Begin calculation index for journal in keyword.");
-            System.out.println("Caculating...");
-            GuruOfPubLogger.logger.warning("Caculating...");
-            calculateIndex.calculateIndexJournalKeyword();
-            System.out.println("End calculation index for journal in keyword.");
-            GuruOfPubLogger.logger.warning("End calculation index for journal in keyword.");
-
             System.out.println("Begin calculation index for conference.");
             GuruOfPubLogger.logger.warning("Begin calculation index for conference.");
             System.out.println("Caculating...");
@@ -113,6 +65,30 @@ public class CalculateIndexesForGuruOfPub {
             System.out.println("End calculation index for conference.");
             GuruOfPubLogger.logger.warning("End calculation index for conference.");
 
+            System.out.println("Begin calculation index for author in subdomain.");
+            GuruOfPubLogger.logger.warning("Begin calculation index for author in subdomain.");
+            System.out.println("Caculating...");
+            GuruOfPubLogger.logger.warning("Caculating...");
+            calculateIndex.calculateIndexAuthorSubdomain();
+            System.out.println("End calculation index for author in subdomain.");
+            GuruOfPubLogger.logger.warning("End calculation index for author in subdomain.");
+
+            System.out.println("Begin calculation index for org in subdomain.");
+            GuruOfPubLogger.logger.warning("Begin calculation index for org in subdomain.");
+            System.out.println("Caculating...");
+            GuruOfPubLogger.logger.warning("Caculating...");
+            calculateIndex.calculateIndexOrgSubdomain();
+            System.out.println("End calculation index for org in subdomain.");
+            GuruOfPubLogger.logger.warning("End calculation index for org in subdomain.");
+
+            System.out.println("Begin calculation index for journal in subdomain.");
+            GuruOfPubLogger.logger.warning("Begin calculation index for journal in subdomain.");
+            System.out.println("Caculating...");
+            GuruOfPubLogger.logger.warning("Caculating...");
+            calculateIndex.calculateIndexJournalSubdomain();
+            System.out.println("End calculation index for journal in subdomain.");
+            GuruOfPubLogger.logger.warning("End calculation index for journal in subdomain.");
+
             System.out.println("Begin calculation index for conference in subdomain.");
             GuruOfPubLogger.logger.warning("Begin calculation index for conference in subdomain.");
             System.out.println("Caculating...");
@@ -120,6 +96,30 @@ public class CalculateIndexesForGuruOfPub {
             calculateIndex.calculateIndexConferenceSubdomain();
             System.out.println("End calculation index for conference in subdomain.");
             GuruOfPubLogger.logger.warning("End calculation index for conference in subdomain.");
+
+            System.out.println("Begin calculation index for author in keyword.");
+            GuruOfPubLogger.logger.warning("Begin calculation index for author in keyword.");
+            System.out.println("Caculating...");
+            GuruOfPubLogger.logger.warning("Caculating...");
+            calculateIndex.calculateIndexAuthorKeyword();
+            System.out.println("End calculation index for author in keyword.");
+            GuruOfPubLogger.logger.warning("End calculation index for author in keyword.");
+
+            System.out.println("Begin calculation index for org in keyword.");
+            GuruOfPubLogger.logger.warning("Begin calculation index for org in keyword.");
+            System.out.println("Caculating...");
+            GuruOfPubLogger.logger.warning("Caculating...");
+            calculateIndex.calculateIndexOrgKeyword();
+            System.out.println("End calculation index for org in keyword.");
+            GuruOfPubLogger.logger.warning("End calculation index for org in keyword.");
+
+            System.out.println("Begin calculation index for journal in keyword.");
+            GuruOfPubLogger.logger.warning("Begin calculation index for journal in keyword.");
+            System.out.println("Caculating...");
+            GuruOfPubLogger.logger.warning("Caculating...");
+            calculateIndex.calculateIndexJournalKeyword();
+            System.out.println("End calculation index for journal in keyword.");
+            GuruOfPubLogger.logger.warning("End calculation index for journal in keyword.");
 
             System.out.println("Begin calculation index for conference in keyword.");
             GuruOfPubLogger.logger.warning("Begin calculation index for conference in keyword.");
