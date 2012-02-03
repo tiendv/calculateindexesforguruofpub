@@ -6,10 +6,10 @@ public class GuruOfPubConst {
         //public static final String DB = "SQLSERVER";
         
 	public static final String HOST = "localhost";
-	public static final String PORT = "3306";
+	public static final String PORT = "3307";
 	public static final String DATABASE = "guruofpub";
 	public static final String USERNAME = "root";
-	public static final String PASSWORD = "root";
+	public static final String PASSWORD = "hntin1975";
         
 	public static final String HOSTMSSQLSERVER = "localhost";
 	public static final String PORTMSSQLSERVER = "1433";
