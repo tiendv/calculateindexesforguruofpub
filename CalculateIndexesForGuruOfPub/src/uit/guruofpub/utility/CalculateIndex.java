@@ -160,6 +160,15 @@ public class CalculateIndex {
     /**
      * calculateIndexAuthorKeyword
      * @throws Exception 
+     * Note: This method runs very slow.
+     * Reasons:
+     * - Too many author and keyword so that number of loop may reach 10 billion. 
+     * - In each loop, code is not optimized: Query DB in each loop, especially creating too many objects by new Comparator<PaperDTO>() method.
+     * Solutions:
+     * - After running stored procedure to generate ranking data, 
+     * only those authors and keywords in the ranking table should be considered to calculate indexes because only them have h_index and g_index > 0.
+     * - Load bulk data and store in memory.
+     * - Use another manner to handle sorting task so that not to many objects are created.
      */
     public void calculateIndexAuthorKeyword() throws Exception {
         ArrayList keywordIdList;
