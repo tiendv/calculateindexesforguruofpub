@@ -60,6 +60,7 @@ public class AuthorDTO {
             AuthorMapper authorMapper = new AuthorMapper();
             setG_index(authorMapper.getG_index(idAuthor));
             unchangedG_index = false;
+            authorMapper.closeConnection();
         }
         return g_index;
     }
@@ -73,6 +74,7 @@ public class AuthorDTO {
             AuthorMapper authorMapper = new AuthorMapper();
             setH_index(authorMapper.getH_index(idAuthor));
             unchangedH_index = false;
+            authorMapper.closeConnection();
         }
         return h_index;
     }
