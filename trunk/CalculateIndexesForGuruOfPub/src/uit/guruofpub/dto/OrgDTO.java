@@ -95,6 +95,7 @@ public class OrgDTO {
             OrgMapper orgMapper = new OrgMapper();
             setG_index(orgMapper.getG_index(idOrg));
             unchangedG_index = false;
+            orgMapper.closeConnection();
         }
         return g_index;
     }
@@ -117,6 +118,7 @@ public class OrgDTO {
             OrgMapper orgMapper = new OrgMapper();
             setH_index(orgMapper.getH_index(idOrg));
             unchangedH_index = false;
+            orgMapper.closeConnection();
         }
         return h_index;
     }

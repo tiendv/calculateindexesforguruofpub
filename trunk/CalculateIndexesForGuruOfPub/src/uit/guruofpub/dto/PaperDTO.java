@@ -179,6 +179,7 @@ public class PaperDTO {
         if (authorList == null) {
             PaperMapper paperMapper = new PaperMapper();
             setAuthorList(paperMapper.getAuthorDTOList(idPaper));
+            paperMapper.closeConnection();
         }
             
         return authorList;
@@ -198,6 +199,7 @@ public class PaperDTO {
         if (conferenceName == null) {
             ConferenceMapper conferenceMapper = new ConferenceMapper();
             setConferenceName(conferenceMapper.getConferenceName(idConference));
+            conferenceMapper.closeConnection();
         }
         
         return conferenceName;
@@ -217,6 +219,7 @@ public class PaperDTO {
         if (journalName == null) {
             JournalMapper journalMapper = new JournalMapper();
             setJournalName(journalMapper.getJournalName(idJournal));
+            journalMapper.closeConnection();
         }
         
         return journalName;
@@ -236,6 +239,7 @@ public class PaperDTO {
         if (citationCount == -1) {
             PaperMapper paperMapper = new PaperMapper();
             setCitationCount(paperMapper.getCitationCount(idPaper));
+            paperMapper.closeConnection();
         }
         return citationCount;
     }
