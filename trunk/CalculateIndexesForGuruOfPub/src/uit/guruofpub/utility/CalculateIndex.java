@@ -317,12 +317,11 @@ public class CalculateIndex {
      */
     public void calculateIndexOrg() throws Exception {
         ArrayList orgIdList;
-        ArrayList authorList;
         ArrayList publicationList;
         OrgMapper orgMapper = new OrgMapper();
         int h_index;
         int g_index;
-        int authorH_index;
+        int citationCount;
         int citationCountSum;
 
         try {
@@ -330,43 +329,8 @@ public class CalculateIndex {
             // For each orgId.
             for (Object o : orgIdList) {
                 int idOrg = Integer.parseInt(o.toString());
-                authorList = orgMapper.getAuthorDTOListByOrgId(idOrg);
-                // Sort authorList of org by h-index.
-                Collections.sort(authorList, new Comparator<AuthorDTO>() {
-
-                    public int compare(AuthorDTO one, AuthorDTO other) {
-                        int result = 0;
-                        try {
-                            if (one.getH_index() > other.getH_index()) {
-                                result = -1;
-                            } else if (one.getH_index() < other.getH_index()) {
-                                result = 1;
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                            GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
-                            Object[] arrObj = ex.getStackTrace();
-                            if (arrObj != null) {
-                                for (Object stackTraceElement : arrObj) {
-                                    GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
-                                }
-                            }
-                        }
-                        return result;
-                    }
-                });
-                // Calculate h-index for each org.
-                h_index = 0;
-                while (h_index < authorList.size()) {
-                    authorH_index = ((AuthorDTO) authorList.get(h_index)).getH_index();
-                    if (authorH_index >= (h_index + 1)) {
-                        h_index++;
-                    } else {
-                        break;
-                    }
-                }
                 publicationList = orgMapper.getPublicationDTOListByOrgId(idOrg);
-                // Sort publicationList of author by citationCount.
+                // Sort publicationList of org by citationCount.
                 Collections.sort(publicationList, new Comparator<PaperDTO>() {
 
                     public int compare(PaperDTO one, PaperDTO other) {
@@ -390,7 +354,17 @@ public class CalculateIndex {
                         return result;
                     }
                 });
-                // Calculate g-index for each author.
+                // Calculate h-index for each org.
+                h_index = 0;
+                while (h_index < publicationList.size()) {
+                    citationCount = ((PaperDTO) publicationList.get(h_index)).getCitationCount();
+                    if (citationCount >= (h_index + 1)) {
+                        h_index++;
+                    } else {
+                        break;
+                    }
+                }
+                // Calculate g-index for each org.
                 g_index = 0;
                 citationCountSum = 0;
                 while (true) {
@@ -430,13 +404,12 @@ public class CalculateIndex {
     public void calculateIndexOrgSubdomain() throws Exception {
         ArrayList subdomainIdList;
         ArrayList orgIdList;
-        ArrayList authorList;
         ArrayList publicationList;
         SubdomainMapper subdomainMapper = new SubdomainMapper();
         OrgMapper orgMapper = new OrgMapper();
         int h_index;
         int g_index;
-        int authorH_index;
+        int citationCount;
         int citationCountSum;
 
         try {
@@ -447,41 +420,6 @@ public class CalculateIndex {
                 for (Object o2 : subdomainIdList) {
                     int idOrg = Integer.parseInt(o.toString());
                     int idSubdomain = Integer.parseInt(o2.toString());
-                    authorList = orgMapper.getAuthorDTOListByOrgIdSubdomainId(idOrg, idSubdomain);
-                    // Sort authorList of org by h-index.
-                    Collections.sort(authorList, new Comparator<AuthorDTO>() {
-
-                        public int compare(AuthorDTO one, AuthorDTO other) {
-                            int result = 0;
-                            try {
-                                if (one.getH_index() > other.getH_index()) {
-                                    result = -1;
-                                } else if (one.getH_index() < other.getH_index()) {
-                                    result = 1;
-                                }
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                                GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
-                                Object[] arrObj = ex.getStackTrace();
-                                if (arrObj != null) {
-                                    for (Object stackTraceElement : arrObj) {
-                                        GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
-                                    }
-                                }
-                            }
-                            return result;
-                        }
-                    });
-                    // Calculate h-index for each org.
-                    h_index = 0;
-                    while (h_index < authorList.size()) {
-                        authorH_index = ((AuthorDTO) authorList.get(h_index)).getH_index();
-                        if (authorH_index >= (h_index + 1)) {
-                            h_index++;
-                        } else {
-                            break;
-                        }
-                    }
                     publicationList = orgMapper.getPublicationDTOListByOrgIdSubdomainId(idOrg, idSubdomain);
                     // Sort publicationList of author by citationCount.
                     Collections.sort(publicationList, new Comparator<PaperDTO>() {
@@ -507,7 +445,17 @@ public class CalculateIndex {
                             return result;
                         }
                     });
-                    // Calculate g-index for each author.
+                    // Calculate h-index for each org.
+                    h_index = 0;
+                    while (h_index < publicationList.size()) {
+                        citationCount = ((PaperDTO) publicationList.get(h_index)).getCitationCount();
+                        if (citationCount >= (h_index + 1)) {
+                            h_index++;
+                        } else {
+                            break;
+                        }
+                    }
+                    // Calculate g-index for each org.
                     g_index = 0;
                     citationCountSum = 0;
                     while (true) {
@@ -549,13 +497,12 @@ public class CalculateIndex {
     public void calculateIndexOrgKeyword() throws Exception {
         ArrayList keywordIdList;
         ArrayList orgIdList;
-        ArrayList authorList;
         ArrayList publicationList;
         KeywordMapper keywordMapper = new KeywordMapper();
         OrgMapper orgMapper = new OrgMapper();
         int h_index;
         int g_index;
-        int authorH_index;
+        int citationCount;
         int citationCountSum;
 
         try {
@@ -566,41 +513,6 @@ public class CalculateIndex {
                 for (Object o2 : keywordIdList) {
                     int idOrg = Integer.parseInt(o.toString());
                     int idKeyword = Integer.parseInt(o2.toString());
-                    authorList = orgMapper.getAuthorDTOListByOrgIdKeywordId(idOrg, idKeyword);
-                    // Sort authorList of org by h-index.
-                    Collections.sort(authorList, new Comparator<AuthorDTO>() {
-
-                        public int compare(AuthorDTO one, AuthorDTO other) {
-                            int result = 0;
-                            try {
-                                if (one.getH_index() > other.getH_index()) {
-                                    result = -1;
-                                } else if (one.getH_index() < other.getH_index()) {
-                                    result = 1;
-                                }
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                                GuruOfPubLogger.logger.severe("EXCEPTION: " + ex.toString());
-                                Object[] arrObj = ex.getStackTrace();
-                                if (arrObj != null) {
-                                    for (Object stackTraceElement : arrObj) {
-                                        GuruOfPubLogger.logger.severe("\tat " + stackTraceElement.toString());
-                                    }
-                                }
-                            }
-                            return result;
-                        }
-                    });
-                    // Calculate h-index for each org.
-                    h_index = 0;
-                    while (h_index < authorList.size()) {
-                        authorH_index = ((AuthorDTO) authorList.get(h_index)).getH_index();
-                        if (authorH_index >= (h_index + 1)) {
-                            h_index++;
-                        } else {
-                            break;
-                        }
-                    }
                     publicationList = orgMapper.getPublicationDTOListByOrgIdKeywordId(idOrg, idKeyword);
                     // Sort publicationList of author by citationCount.
                     Collections.sort(publicationList, new Comparator<PaperDTO>() {
@@ -626,6 +538,16 @@ public class CalculateIndex {
                             return result;
                         }
                     });
+                    // Calculate h-index for each org.
+                    h_index = 0;
+                    while (h_index < publicationList.size()) {
+                        citationCount = ((PaperDTO) publicationList.get(h_index)).getCitationCount();
+                        if (citationCount >= (h_index + 1)) {
+                            h_index++;
+                        } else {
+                            break;
+                        }
+                    }
                     // Calculate g-index for each author.
                     g_index = 0;
                     citationCountSum = 0;
