@@ -1,0 +1,10 @@
+﻿CSPublicationCrawler user's manual:
+
+- Quản lý các chỉ số được tính toán: 
+	+ calculateindexes.controller\CalculateIndexes.java
+
+- Chi tiết cài đặt:
+	+ uit.guruofpub.utility\CalculateIndex.java
+
+- Note: 
+	+ Folder chứa file log: C:\CalculateIndexesForPubGuruLog
