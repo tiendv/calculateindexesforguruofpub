@@ -6,8 +6,8 @@ package uit.pubguru.dbconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import uit.pubguru.constant.PubGuruConst;
 import uit.pubguru.utility.PubGuruLogger;
@@ -31,7 +31,7 @@ public class ConnectionService {
      * @return
      * @throws Exception 
      */
-    public static Connection getConnection() throws Exception {
+    public static Connection getConnection() throws NamingException, Exception {
         DataSource dataSource = null;
         Connection connection = null;
         try {
