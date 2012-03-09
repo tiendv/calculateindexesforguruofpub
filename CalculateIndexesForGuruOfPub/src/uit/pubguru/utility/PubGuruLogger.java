@@ -5,7 +5,7 @@
 package uit.pubguru.utility;
 
 import java.util.logging.*;
-import uit.pubguru.constant.GuruOfPubConst;
+import uit.pubguru.constant.PubGuruConst;
 
 /**
  *
@@ -37,7 +37,7 @@ public class PubGuruLogger {
           logger.setUseParentHandlers(false);
           logger.addHandler(logHandler);
           // Change LOGGING_LEVEL in Constant to WARNING in order to disable logging on normal info, only log important info.
-          logger.setLevel(GuruOfPubConst.LOGGING_LEVEL);
+          logger.setLevel(PubGuruConst.LOGGING_LEVEL);
         }
         catch (Exception ex) {
             System.out.println("Create folder [C:\\CalculateIndexesForPubGuruLog\\] if not existing.");

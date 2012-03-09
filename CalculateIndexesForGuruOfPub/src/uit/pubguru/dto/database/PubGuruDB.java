@@ -10,5 +10,5 @@ package uit.pubguru.dto.database;
  */
 public class PubGuruDB {
 
-    public static final String DBNAME = "CSPublicationCrawler";//"GuruOfPub";
+    public static final String DBNAME = "GuruOfPub";//"CSPublicationCrawler";
 }

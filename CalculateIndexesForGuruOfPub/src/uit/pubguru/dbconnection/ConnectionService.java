@@ -2,13 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uit.pubguru.dbconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import uit.pubguru.constant.GuruOfPubConst;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import uit.pubguru.constant.PubGuruConst;
+import uit.pubguru.utility.PubGuruLogger;
 
 public class ConnectionService {
 
@@ -30,15 +32,31 @@ public class ConnectionService {
      * @throws Exception 
      */
     public static Connection getConnection() throws Exception {
-        if (GuruOfPubConst.DB.compareTo("MYSQL") == 0) {
-            return getConnectionMySQL();
+        DataSource dataSource = null;
+        Connection connection = null;
+        try {
+            if (PubGuruConst.DB.compareTo("DS") == 0) {
+                dataSource = (DataSource) new InitialContext().lookup(PubGuruConst.JNDI_NAME);
+                connection = dataSource.getConnection();
+            } else if (PubGuruConst.DB.compareTo("MYSQL") == 0) {
+                connection = getConnectionMySQL();
+            } else if (PubGuruConst.DB.compareTo("MSSQLSERVER") == 0) {
+                connection = getConnectionMSSQLServer();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
+            Object[] arrObj = ex.getStackTrace();
+            if (arrObj != null) {
+                for (Object stackTraceElement : arrObj) {
+                    PubGuruLogger.logger.severe("\tat " + stackTraceElement.toString());
+                }
+            }
+            throw ex;
         }
-        else {
-            return getConnectionMSSQLServer();
-        }
-        
+        return connection;
     }
-    
+
     /**
      * getConnectionMySQL
      * @return
@@ -48,11 +66,11 @@ public class ConnectionService {
         Connection connect = null;
         if (connect == null) {
             loadJDBCDriver();
-            String url = "jdbc:mysql://" + GuruOfPubConst.HOST
-                    + ":" + GuruOfPubConst.PORT
-                    + "/" + GuruOfPubConst.DATABASE
-                    + "?user=" + GuruOfPubConst.USERNAME
-                    + "&password=" + GuruOfPubConst.PASSWORD
+            String url = "jdbc:mysql://" + PubGuruConst.HOST
+                    + ":" + PubGuruConst.PORT
+                    + "/" + PubGuruConst.DATABASE
+                    + "?user=" + PubGuruConst.USERNAME
+                    + "&password=" + PubGuruConst.PASSWORD
                     + "&autoReconnect=true"
                     + "&connectTimeout=300"
                     + "&useBlobToStoreUTF8OutsideBMP=true";
@@ -65,7 +83,7 @@ public class ConnectionService {
         }
         return connect;
     }
-    
+
     /**
      * getConnectionMSSQLServer
      * @return
@@ -74,12 +92,12 @@ public class ConnectionService {
     public static Connection getConnectionMSSQLServer() throws Exception {
         Connection connect = null;
         if (connect == null) {
-            String url = "jdbc:sqlserver://" + GuruOfPubConst.HOSTMSSQLSERVER
-                    + ":" + GuruOfPubConst.PORTMSSQLSERVER
-                    + ";databaseName=" + GuruOfPubConst.DATABASEMSSQLSERVER
-                    + ";user=" + GuruOfPubConst.USERNAMEMSSQLSERVER
-                    + ";password=" + GuruOfPubConst.PASSWORDMSSQLSERVER
-                    + ";loginTimeout=300";            
+            String url = "jdbc:sqlserver://" + PubGuruConst.HOSTMSSQLSERVER
+                    + ":" + PubGuruConst.PORTMSSQLSERVER
+                    + ";databaseName=" + PubGuruConst.DATABASEMSSQLSERVER
+                    + ";user=" + PubGuruConst.USERNAMEMSSQLSERVER
+                    + ";password=" + PubGuruConst.PASSWORDMSSQLSERVER
+                    + ";loginTimeout=300";
             try {
                 connect = DriverManager.getConnection(url);
             } catch (java.sql.SQLException e) {
@@ -87,8 +105,8 @@ public class ConnectionService {
             } catch (Exception ex) {
                 throw new Exception();
             }
-            
+
         }
         return connect;
-    }    
+    }
 }
