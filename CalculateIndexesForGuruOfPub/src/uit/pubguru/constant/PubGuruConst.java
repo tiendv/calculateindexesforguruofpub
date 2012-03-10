@@ -31,4 +31,6 @@ public class PubGuruConst {
     
     //public static final Level LOGGING_LEVEL = Level.ALL;
     public static final Level LOGGING_LEVEL = Level.WARNING;
+    
+    public static final int LIMIT_BULK_LOAD_ID = 100000;
 }
