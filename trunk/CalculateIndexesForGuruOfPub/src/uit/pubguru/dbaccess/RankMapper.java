@@ -159,23 +159,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList getAuthorSubdomainIdList() throws Exception {
+    public ArrayList getAuthorSubdomainIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idAuthor, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_author_subdomain r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idAuthor"));
-                idDTO.setId2(rs.getInt("idSubdomain"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_author_subdomain r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idAuthor, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_author_subdomain r");
+            sql.append(" order by r.idAuthor, r.idSubdomain limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idAuthor"));
+                    idDTO.setId2(rs.getInt("idSubdomain"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -261,23 +280,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList getAuthorKeywordIdList() throws Exception {
+    public ArrayList getAuthorKeywordIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idAuthor, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_author_keyword r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idAuthor"));
-                idDTO.setId2(rs.getInt("idKeyword"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_author_keyword r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idAuthor, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_author_keyword r");
+            sql.append(" order by r.idAuthor, r.idKeyword limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idAuthor"));
+                    idDTO.setId2(rs.getInt("idKeyword"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -459,23 +497,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList<IdDTO> getOrgSubdomainIdList() throws Exception {
+    public ArrayList<IdDTO> getOrgSubdomainIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idOrg, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_org_subdomain r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idOrg"));
-                idDTO.setId2(rs.getInt("idSubdomain"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_org_subdomain r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idOrg, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_org_subdomain r");
+            sql.append(" order by r.idOrg, r.idSubdomain limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idOrg"));
+                    idDTO.setId2(rs.getInt("idSubdomain"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -563,23 +620,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList<IdDTO> getOrgKeywordIdList() throws Exception {
+    public ArrayList<IdDTO> getOrgKeywordIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idOrg, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_org_keyword r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idOrg"));
-                idDTO.setId2(rs.getInt("idKeyword"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_org_keyword r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idOrg, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_org_keyword r");
+            sql.append(" order by r.idOrg, r.idKeyword limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idOrg"));
+                    idDTO.setId2(rs.getInt("idKeyword"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -758,23 +834,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList<IdDTO> getJournalSubdomainIdList() throws Exception {
+    public ArrayList<IdDTO> getJournalSubdomainIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idJournal, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_subdomain r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idJournal"));
-                idDTO.setId2(rs.getInt("idSubdomain"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_subdomain r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idJournal, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_subdomain r");
+            sql.append(" order by r.idJournal, r.idSubdomain limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idJournal"));
+                    idDTO.setId2(rs.getInt("idSubdomain"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -858,23 +953,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList<IdDTO> getJournalKeywordIdList() throws Exception {
+    public ArrayList<IdDTO> getJournalKeywordIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idJournal, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_keyword r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idJournal"));
-                idDTO.setId2(rs.getInt("idKeyword"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_keyword r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idJournal, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_keyword r");
+            sql.append(" order by r.idJournal, r.idKeyword limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idJournal"));
+                    idDTO.setId2(rs.getInt("idKeyword"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -1049,23 +1163,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList<IdDTO> getConferenceSubdomainIdList() throws Exception {
+    public ArrayList<IdDTO> getConferenceSubdomainIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idConference, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_subdomain r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idConference"));
-                idDTO.setId2(rs.getInt("idSubdomain"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_subdomain r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idConference, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_subdomain r");
+            sql.append(" order by r.idConference, r.idSubdomain limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idConference"));
+                    idDTO.setId2(rs.getInt("idSubdomain"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());
@@ -1148,23 +1281,42 @@ public class RankMapper extends MapperDB {
         return result;
     }
 
-    public ArrayList<IdDTO> getConferenceKeywordIdList() throws Exception {
+    public ArrayList<IdDTO> getConferenceKeywordIdList(int limit) throws Exception {
         ArrayList idList = new ArrayList();
         IdDTO idDTO = null;
+        int offset = 0;
+        int rowCount = 0;
+        StringBuffer sql = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         try {
-            StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT r.idConference, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_keyword r");
-            PreparedStatement stmt = getConnection().prepareStatement(sql.toString());
-            ResultSet rs = stmt.executeQuery();
-            while ((rs != null) && (rs.next())) {
-                idDTO = new IdDTO();
-                idDTO.setId1(rs.getInt("idConference"));
-                idDTO.setId2(rs.getInt("idKeyword"));
-                idList.add(idDTO);
+            sql = new StringBuffer();
+            sql.append(" SELECT count(*) FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_keyword r");
+            stmt = getConnection().prepareStatement(sql.toString());
+            rs = stmt.executeQuery();
+            if ((rs != null) && (rs.next())) {
+                rowCount = rs.getInt(1);
             }
-
             stmt.close();
+
+            sql = new StringBuffer();
+            sql.append(" SELECT r.idConference, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_keyword r");
+            sql.append(" order by r.idConference, r.idKeyword limit ?, ?");
+            stmt = getConnection().prepareStatement(sql.toString());
+            while (offset < rowCount) {
+                stmt.setInt(1, offset);
+                stmt.setInt(2, limit);
+                rs = stmt.executeQuery();
+                while ((rs != null) && (rs.next())) {
+                    idDTO = new IdDTO();
+                    idDTO.setId1(rs.getInt("idConference"));
+                    idDTO.setId2(rs.getInt("idKeyword"));
+                    idList.add(idDTO);
+                }
+                stmt.close();
+                offset += limit;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             PubGuruLogger.logger.severe("EXCEPTION: " + ex.toString());

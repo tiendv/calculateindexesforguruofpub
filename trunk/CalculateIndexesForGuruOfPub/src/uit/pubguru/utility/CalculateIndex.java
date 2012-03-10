@@ -5,6 +5,7 @@
 package uit.pubguru.utility;
 
 import java.util.ArrayList;
+import uit.pubguru.constant.PubGuruConst;
 import uit.pubguru.dbaccess.RankMapper;
 import uit.pubguru.dto.PaperDTO;
 
@@ -90,7 +91,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getAuthorSubdomainIdList();
+            idList = rankMapper.getAuthorSubdomainIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idAuthor = idDTO.getId1();
@@ -170,7 +171,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getAuthorKeywordIdList();
+            idList = rankMapper.getAuthorKeywordIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idAuthor = idDTO.getId1();
@@ -295,7 +296,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getOrgSubdomainIdList();
+            idList = rankMapper.getOrgSubdomainIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idOrg = idDTO.getId1();
@@ -358,7 +359,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getOrgKeywordIdList();
+            idList = rankMapper.getOrgKeywordIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idOrg = idDTO.getId1();
@@ -469,7 +470,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getJournalSubdomainIdList();
+            idList = rankMapper.getJournalSubdomainIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idJournal = idDTO.getId1();
@@ -520,7 +521,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getJournalKeywordIdList();
+            idList = rankMapper.getJournalKeywordIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idJournal = idDTO.getId1();
@@ -621,7 +622,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getConferenceSubdomainIdList();
+            idList = rankMapper.getConferenceSubdomainIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idConference = idDTO.getId1();
@@ -672,7 +673,7 @@ public class CalculateIndex {
         int citationCountSum;
 
         try {
-            idList = rankMapper.getConferenceKeywordIdList();
+            idList = rankMapper.getConferenceKeywordIdList(PubGuruConst.LIMIT_BULK_LOAD_ID);
             // For each id.
             for (IdDTO idDTO : idList) {
                 int idConference = idDTO.getId1();
