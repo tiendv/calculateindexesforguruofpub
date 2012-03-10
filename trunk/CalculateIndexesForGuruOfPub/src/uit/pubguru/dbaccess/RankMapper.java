@@ -181,8 +181,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idAuthor, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_author_subdomain r");
             sql.append(" order by r.idAuthor, r.idSubdomain limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -302,8 +302,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idAuthor, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_author_keyword r");
             sql.append(" order by r.idAuthor, r.idKeyword limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -519,8 +519,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idOrg, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_org_subdomain r");
             sql.append(" order by r.idOrg, r.idSubdomain limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -642,8 +642,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idOrg, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_org_keyword r");
             sql.append(" order by r.idOrg, r.idKeyword limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -856,8 +856,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idJournal, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_subdomain r");
             sql.append(" order by r.idJournal, r.idSubdomain limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -975,8 +975,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idJournal, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_journal_keyword r");
             sql.append(" order by r.idJournal, r.idKeyword limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -1185,8 +1185,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idConference, r.idSubdomain FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_subdomain r");
             sql.append(" order by r.idConference, r.idSubdomain limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
@@ -1303,8 +1303,8 @@ public class RankMapper extends MapperDB {
             sql = new StringBuffer();
             sql.append(" SELECT r.idConference, r.idKeyword FROM " + PubGuruDB.DBNAME + "." + "_rank_conference_keyword r");
             sql.append(" order by r.idConference, r.idKeyword limit ?, ?");
-            stmt = getConnection().prepareStatement(sql.toString());
             while (offset < rowCount) {
+                stmt = getConnection().prepareStatement(sql.toString());
                 stmt.setInt(1, offset);
                 stmt.setInt(2, limit);
                 rs = stmt.executeQuery();
