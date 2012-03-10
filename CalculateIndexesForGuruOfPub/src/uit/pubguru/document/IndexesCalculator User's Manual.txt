@@ -1,10 +1,16 @@
-﻿CSPublicationCrawler user's manual:
+CalculateIndexesForPubGuru user's manual:
+
+- Cấu hình DB sử dụng:
+    + uit.pubguru.constant\PubGuruConst.java
+    + uit.pubguru.dto.database\PubGuruDB.java
+    + Thiết lập thông số cấu hình trong Datasource của glassfish.
+    (* Note: add gf-client.jar)
 
 - Quản lý các chỉ số được tính toán: 
-	+ calculateindexes.controller\CalculateIndexes.java
+    + calculateindexes.controller\CalculateIndexes.java
 
 - Chi tiết cài đặt:
-	+ uit.guruofpub.utility\CalculateIndex.java
+    + uit.pubguru.utility\CalculateIndex.java
 
 - Note: 
-	+ Folder chứa file log: C:\CalculateIndexesForPubGuruLog
+    + Folder chứa file log: C:\CalculateIndexesForPubGuruLog
